@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setCreateUser(BaseContext.getCurrentId());
         employee.setUpdateUser(BaseContext.getCurrentId());
-        BaseContext.removeCurrentId();
+//        BaseContext.removeCurrentId();
 
         employeeMapper.insert(employee);
     }
@@ -122,6 +122,35 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
 
         employeeMapper.updateById(employee);
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void edit(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.updateById(employee);
+    }
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee search(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("****");
+
+        return employee;
+
     }
 
 }

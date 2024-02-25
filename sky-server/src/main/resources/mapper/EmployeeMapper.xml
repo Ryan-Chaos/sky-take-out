@@ -15,8 +15,23 @@
     <update id="updateById">
         update employee
         <set>
+            <if test="name!=null and name!=''">
+                name = #{name}
+            </if>
+            <if test="username!=null and username!=''">
+                ,username = #{username}
+            </if>
+            <if test="idNumber!=null">
+                ,id_number = #{idNumber}
+            </if>
+            <if test="phone!=null">
+                ,phone = #{phone}
+            </if>
+            <if test="sex!=null">
+                ,sex = #{sex}
+            </if>
             <if test="status!=null">
-                status = #{status}
+                ,status = #{status}
             </if>
         </set>
         where id = #{id}
