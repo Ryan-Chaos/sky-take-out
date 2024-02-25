@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.Lcase;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
@@ -9,6 +10,7 @@ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
@@ -147,10 +149,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee search(Long id) {
         Employee employee = employeeMapper.getById(id);
-        employee.setPassword("****");
+//        employee.setPassword("****");
 
         return employee;
 
+    }
+
+    @Override
+    public void editPassword(PasswordEditDTO passwordEditDTO) {
+        Long id = passwordEditDTO.getEmpId();
+        String oldPassword = passwordEditDTO.getOldPassword();
+        String newPassword = passwordEditDTO.getNewPassword();
+
+        Employee employee = employeeMapper.getById(id);
+
+        oldPassword = DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+        newPassword = DigestUtils.md5DigestAsHex(newPassword.getBytes());
+        if (!oldPassword.equals(employee.getPassword())) {
+            //密码错误
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+        }
+
+        employee.setPassword(newPassword);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.updateById(employee);
     }
 
 }

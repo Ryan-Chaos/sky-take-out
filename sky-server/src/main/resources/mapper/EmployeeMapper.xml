@@ -33,6 +33,9 @@
             <if test="status!=null">
                 ,status = #{status}
             </if>
+            <if test="password!=null">
+                ,password = #{password}
+            </if>
         </set>
         where id = #{id}
     </update>
