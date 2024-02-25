@@ -11,4 +11,14 @@
         </where>
         order by create_time desc
     </select>
+
+    <update id="updateById">
+        update employee
+        <set>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
