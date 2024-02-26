@@ -10,4 +10,5 @@
                 (#{df.dishId},#{df.name},#{df.value})
             </foreach>
     </insert>
+
 </mapper>
