@@ -82,11 +82,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置状态、密码、创建时间、更新时间、创建人、更新人
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 //        BaseContext.removeCurrentId();
 
         employeeMapper.insert(employee);
@@ -135,8 +135,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
 
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.updateById(employee);
     }
@@ -155,6 +155,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     */
+
     @Override
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         Long id = passwordEditDTO.getEmpId();
@@ -171,8 +176,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         employee.setPassword(newPassword);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.updateById(employee);
     }
