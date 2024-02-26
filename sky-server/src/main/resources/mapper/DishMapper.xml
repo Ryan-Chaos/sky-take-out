@@ -8,8 +8,8 @@
         values
             (#{name},#{categoryId},#{price},#{image},#{description},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})
     </insert>
-    <select id="pageQuery" resultType="com.sky.entity.Dish">
-        select * from dish
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select d.*,c.name as categoryName from dish d left outer join category c on d.category_id = c.id
         <where>
             <if test="categoryId!=null">
                 category_id = #{categoryId}
@@ -22,4 +22,5 @@
             </if>
         </where>
     </select>
+
 </mapper>
