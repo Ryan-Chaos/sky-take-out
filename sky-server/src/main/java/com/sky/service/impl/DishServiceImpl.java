@@ -13,7 +13,6 @@ import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.result.PageResult;
-import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
@@ -100,16 +99,35 @@ public class DishServiceImpl implements DishService {
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
 
-        //删除菜品
-
-
-        //删除关联的口味
-
-
         for (Long id : ids) {
+            //删除菜品
+            //删除关联的口味
             dishMapper.deleteById(id);
             dishFlavorMapper.deleteById(id);
         }
 
+    }
+
+
+    /**
+     * 根据id查询菜品及口味
+     * @param id
+     * @return
+     */
+    @Override
+    public DishVO searchById(Long id) {
+        //根据id查询菜品dish
+        Dish dish = dishMapper.getById(id);
+
+        //根据dish_id在dish_flavor中查询口味
+        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
+
+
+        //封装到VO
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(flavors);
+
+        return dishVO;
     }
 }
