@@ -78,4 +78,19 @@ public class DishController {
 
         return Result.success(dishVO);
     }
+
+
+    /**
+     * 修改菜品
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result edit(@RequestBody DishDTO dishDTO){
+        log.info("修改菜品");
+
+        dishService.edit(dishDTO);
+
+        return Result.success();
+    }
 }
