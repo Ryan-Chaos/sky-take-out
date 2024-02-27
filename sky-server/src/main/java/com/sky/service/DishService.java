@@ -43,4 +43,12 @@ public interface DishService {
      * @param dishDTO
      */
     void edit(DishDTO dishDTO);
+
+
+    /**
+     * 修改status状态
+     * @param status
+     * @param id
+     */
+    void editStatusById(Integer status, Long id);
 }
