@@ -11,5 +11,11 @@ public interface SetmealService {
      */
     void insert(SetmealDTO setmealDTO);
 
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
     SetmealVO getById(Long id);
 }

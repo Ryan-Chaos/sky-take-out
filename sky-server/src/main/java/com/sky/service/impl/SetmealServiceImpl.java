@@ -33,10 +33,11 @@ public class SetmealServiceImpl implements SetmealService {
 
         setmealMapper.insert(setmeal);
 
+        Long setmealId = setmeal.getId();
         //setmealdish中新增套餐菜品关系
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         for (SetmealDish setmealDish : setmealDishes) {
-            setmealDish.setSetmealId(setmealDTO.getId());
+            setmealDish.setSetmealId(setmealId);
         }
         setmealDishMapper.insertBatch(setmealDishes);
 
