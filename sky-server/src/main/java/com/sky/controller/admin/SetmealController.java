@@ -1,8 +1,10 @@
 package com.sky.controller.admin;
 
 import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.mapper.SetmealMapper;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
 import com.sky.vo.SetmealVO;
@@ -49,6 +51,22 @@ public class SetmealController {
         SetmealVO setmealVO = setmealService.getById(id);
 
         return Result.success(setmealVO);
+    }
+
+
+    /**
+     * 套餐分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    @GetMapping("/page")
+    @ApiOperation("套餐分页查询")
+    public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO){
+        log.info("套餐分页查询");
+
+        PageResult pageResult = setmealService.page(setmealPageQueryDTO);
+
+        return Result.success(pageResult);
     }
 
 
