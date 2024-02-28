@@ -9,8 +9,30 @@
 
 
     <update id="update">
-        update setmeal set status = #{status} where id = #{id}
+        update setmeal
+        <set>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+            <if test="categoryId!=null">
+                ,category_id = #{categoryId}
+            </if>
+            <if test="image!=null">
+                ,image = #{image}
+            </if>
+            <if test="name!=null">
+                ,name = #{name}
+            </if>
+            <if test="price!=null">
+                ,price = #{price}
+            </if>
+            <if test="description!=null">
+                ,description = #{description}
+            </if>
+        </set>
+        where id = #{id}
     </update>
+
     <select id="get" resultType="com.sky.entity.Setmeal">
         select * from setmeal
         <where>

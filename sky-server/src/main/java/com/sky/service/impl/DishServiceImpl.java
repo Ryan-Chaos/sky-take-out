@@ -37,6 +37,9 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private SetmealDishMapper setmealDishMapper;
 
+    @Autowired
+    private SetmealMapper setmealMapper;
+
     /**
      * 新增菜品
      * @return
@@ -159,6 +162,11 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+
+    /**
+     * 启售、停售菜品
+     * @return
+     */
     @Override
     public void editStatusById(Integer status, Long id) {
         Dish dish = new Dish();
@@ -173,7 +181,7 @@ public class DishServiceImpl implements DishService {
         if(setmealIds!=null && setmealIds.size()>0){
             for (Long setmealId : setmealIds) {
                 Setmeal setmeal = Setmeal.builder().id(setmealId).status(StatusConstant.DISABLE).build();
-                SetmealMapper.update(setmeal);
+                setmealMapper.update(setmeal);
             }
         }
     }
