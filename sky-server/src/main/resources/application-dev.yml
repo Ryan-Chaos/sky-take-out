@@ -12,3 +12,8 @@ sky:
     access-key-id: LTAI5t7aCXcETuDaRcgtHkob
     access-key-secret: LatetE8sMTUawSswsZX0kipd6D37RS
     bucket-name: ryan-take-out
+
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
