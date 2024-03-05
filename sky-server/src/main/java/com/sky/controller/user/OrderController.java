@@ -51,9 +51,14 @@ public class OrderController {
     @ApiOperation("订单支付")
     public Result<OrderPaymentVO> payment(@RequestBody OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         log.info("订单支付：{}", ordersPaymentDTO);
-        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
-        log.info("生成预支付交易单：{}", orderPaymentVO);
-        return Result.success(orderPaymentVO);
+//        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
+//        log.info("生成预支付交易单：{}", orderPaymentVO);
+//        return Result.success(orderPaymentVO);
+
+        //直接进入支付成功
+        //业务处理，修改订单状态、来单提醒
+        orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
+        return Result.success();
     }
 
     /**
