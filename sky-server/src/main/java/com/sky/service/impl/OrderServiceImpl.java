@@ -81,6 +81,8 @@ public class OrderServiceImpl implements OrderService {
         orders.setPhone(addressBook.getPhone());
         orders.setConsignee(addressBook.getConsignee());
         orders.setUserId(userId);
+        String address = addressToString(addressBook);
+        orders.setAddress(address);
 
         orderMapper.insert(orders);
         Long orderId = orders.getId();
@@ -106,6 +108,11 @@ public class OrderServiceImpl implements OrderService {
                 id(orderId).orderNumber(orders.getNumber()).orderTime(orders.getOrderTime()).orderAmount(orders.getAmount()).build();
 
         return orderSubmitVO;
+    }
+
+    private String addressToString(AddressBook addressBook){
+        String add = addressBook.getProvinceName()+addressBook.getCityName()+addressBook.getDistrictName()+addressBook.getDetail();
+        return add;
     }
 
     /**
