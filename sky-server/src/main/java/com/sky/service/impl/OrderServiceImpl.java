@@ -17,6 +17,7 @@ import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
@@ -274,5 +275,70 @@ public class OrderServiceImpl implements OrderService {
             shoppingCartMapper.insertBatch(shoppingCartList);
         }
 
+    }
+
+
+    /**
+     * 订单搜索
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult get(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageHelper.startPage(ordersPageQueryDTO.getPage(),ordersPageQueryDTO.getPageSize());
+
+        Page<Orders> page = orderMapper.pageQuery(ordersPageQueryDTO);
+        List<OrderVO> list = new ArrayList<>();
+
+        if (page != null && !page.isEmpty()) {
+            for (Orders orders : page) {
+                OrderVO orderVO = new OrderVO();
+                BeanUtils.copyProperties(orders,orderVO);
+                String orderDishes = getorderDishes(orders);
+                orderVO.setOrderDishes(orderDishes);
+                list.add(orderVO);
+            }
+        }
+
+
+        return new PageResult(page.getTotal(),list);
+    }
+
+
+    /**
+     * 获取订单包含的菜品字符串
+     * @param orders
+     * @return
+     */
+    public String getorderDishes(Orders orders){
+        List<OrderDetail> list = orderDetailMapper.getById(orders.getId());
+        StringBuilder dishes = new StringBuilder();
+
+        if (list != null && !list.isEmpty()) {
+            for (OrderDetail orderDetail : list) {
+                dishes.append(orderDetail.getName()).append(orderDetail.getNumber()).append("份;");
+            }
+
+        }
+        return dishes.toString();
+    }
+
+
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
+    @Override
+    public OrderStatisticsVO statistics() {
+        Integer toBeConfirmed = orderMapper.getNumber(Orders.TO_BE_CONFIRMED);
+        Integer confirmed = orderMapper.getNumber(Orders.CONFIRMED);
+        Integer deliveryInProgress = orderMapper.getNumber(Orders.DELIVERY_IN_PROGRESS);
+
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        orderStatisticsVO.setToBeConfirmed(toBeConfirmed);
+        orderStatisticsVO.setConfirmed(confirmed);
+        orderStatisticsVO.setDeliveryInProgress(deliveryInProgress);
+
+        return orderStatisticsVO;
     }
 }

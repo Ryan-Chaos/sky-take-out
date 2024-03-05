@@ -55,7 +55,21 @@
                 <if test="status!=null">
                     and status = #{status}
                 </if>
+                <if test="number!=null">
+                    and number like concat('%',#{number},'%')
+                </if>
+                <if test="phone!=null">
+                    and phone like concat('%',#{phone},'%')
+                </if>
+                <if test="status!=null">
+                    and status = #{status}
+                </if>
+                <if test="beginTime!=null and endTime!=null">
+                    and order_time between #{beginTime} and #{endTime}
+                </if>
+
             </where>
             order by order_time desc
     </select>
+
 </mapper>
