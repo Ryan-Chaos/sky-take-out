@@ -246,4 +246,33 @@ public class OrderServiceImpl implements OrderService {
 
         orderMapper.update(cancelOrder);
     }
+
+
+    /**
+     * 再来一单
+     * @param id
+     */
+    @Override
+    public void repetition(Long id) {
+        //获取订单明细
+        List<OrderDetail> list = orderDetailMapper.getById(id);
+        Long userId = BaseContext.getCurrentId();
+
+        //将明细加入购物车
+        if(list!=null && !list.isEmpty()){
+            List<ShoppingCart> shoppingCartList= new ArrayList<>();
+
+            for (OrderDetail orderDetail : list) {
+                ShoppingCart shoppingCart = new ShoppingCart();
+                BeanUtils.copyProperties(orderDetail,shoppingCart);
+                shoppingCart.setUserId(userId);
+                shoppingCart.setCreateTime(LocalDateTime.now());
+
+                shoppingCartList.add(shoppingCart);
+            }
+
+            shoppingCartMapper.insertBatch(shoppingCartList);
+        }
+
+    }
 }
