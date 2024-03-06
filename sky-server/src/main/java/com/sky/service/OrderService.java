@@ -1,11 +1,13 @@
 package com.sky.service;
 
 import com.sky.dto.*;
+import com.sky.entity.Orders;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import org.apache.ibatis.annotations.Select;
 
 public interface OrderService {
 
@@ -102,4 +104,12 @@ public interface OrderService {
      * @param id
      */
     void complete(Long id);
+
+
+    /**
+     * 用户催单
+     * @param id
+     */
+    void reminder(Long id);
+
 }
