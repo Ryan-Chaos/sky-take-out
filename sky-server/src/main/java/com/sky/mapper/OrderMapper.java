@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.core.annotation.Order;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -63,4 +65,15 @@ public interface OrderMapper {
      */
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndLTOrderTime(Integer status, LocalDateTime orderTime);
+
+
+    /**
+     * 获取某天的营业额
+     * @param begin
+     * @param end
+     * @param status
+     * @return
+     */
+
+    BigDecimal getByTime(LocalDateTime begin,LocalDateTime end,Integer status);
 }

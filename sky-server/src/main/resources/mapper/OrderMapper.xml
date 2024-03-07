@@ -71,5 +71,19 @@
             </where>
             order by order_time desc
     </select>
+    <select id="getByTime" resultType="java.math.BigDecimal">
+        select sum(amount) from orders
+        <where>
+            <if test="status !=null">
+                status = #{status}
+            </if>
+            <if test="begin!=null">
+                and order_time &gt; #{begin}
+            </if>
+            <if test="end!=null">
+                and order_time &lt; #{end}
+            </if>
+        </where>
+    </select>
 
 </mapper>
