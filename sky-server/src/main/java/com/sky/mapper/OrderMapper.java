@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
@@ -86,4 +87,13 @@ public interface OrderMapper {
      * @return
      */
     Integer getNumberByTime(LocalDateTime begin,LocalDateTime end,Integer status);
+
+
+    /**
+     * 查询销量排名top10的name和number
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    List<GoodsSalesDTO> getNameAndNumber(LocalDateTime beginTime, LocalDateTime endTime);
 }
