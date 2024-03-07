@@ -76,4 +76,14 @@ public interface OrderMapper {
      */
 
     BigDecimal getByTime(LocalDateTime begin,LocalDateTime end,Integer status);
+
+
+    /**
+     * 查询某天的订单数
+     * @param begin
+     * @param end
+     * @param status
+     * @return
+     */
+    Integer getNumberByTime(LocalDateTime begin,LocalDateTime end,Integer status);
 }
